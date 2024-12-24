@@ -9,9 +9,15 @@ async function registerCommands(client: Client): Promise<void> {
 
   for (const file of commandFiles) {
     const commandModule = await import(file);
-    const command = Object.values(commandModule)[0] as SlashCommand;
+    const command = Object.values(commandModule)[0] as Partial<SlashCommand>;
 
-    client.commands.set(command.data.name, command);
+    if (command?.data && command?.execute) {
+      client.commands.set(command.data.name, command);
+    } else {
+      console.log(
+        `[WARN] The command at ${file} is missing a required "data" or "execute" property.`
+      );
+    }
   }
 }
 

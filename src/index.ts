@@ -1,8 +1,5 @@
 import { config } from "dotenv";
 import { Client } from "./Client";
-import { blue } from "logfy-x";
-
-console.time(blue("Uptime"));
 
 config();
 
@@ -12,5 +9,3 @@ client.registerEvents();
 client.registerCommands();
 
 client.login(process.env.botToken);
-
-console.timeEnd(blue("Uptime"))
