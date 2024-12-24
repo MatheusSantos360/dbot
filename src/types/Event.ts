@@ -1,7 +1,13 @@
 import { ClientEvents } from "discord.js";
+import { Client } from "../Client";
 
-export interface Event {
-  name: keyof ClientEvents;
+type EventArguments<K extends keyof ClientEvents> = {
+  client: Client;
+  args: ClientEvents[K];
+};
+
+export interface Event<K extends keyof ClientEvents = keyof ClientEvents> {
+  name: K;
   once?: boolean;
-  run: (...args: any[]) => void;
+  run: (args: EventArguments<K>) => void;
 }

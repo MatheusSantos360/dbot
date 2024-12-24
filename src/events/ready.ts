@@ -1,14 +1,13 @@
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-import logfy, { blue, info, success } from "logfy-x";
-import { Client } from "../Client";
-import { Event } from "../types/Event";
+import { blue, info, success } from "logfy-x";
 import { config } from "../../config";
+import { Event } from "../types/Event";
 
-export const ready: Event = {
+export const ready: Event<"ready"> = {
   name: "ready",
   once: true,
-  run: async (client: Client) => {
+  run: async ({ client }) => {
     info("Bot is online!", [
       `${blue("Date")}: ${new Date().toLocaleDateString()}`,
       `${blue("Time")}: ${new Date().toLocaleTimeString()}`,
@@ -28,7 +27,10 @@ export const ready: Event = {
 
       // For global commands, use: Routes.applicationCommands(clientId)
 
-      success("Slash commands", "Successfully reloaded application (/) commands.");
+      success(
+        "Slash commands",
+        "Successfully reloaded application (/) commands."
+      );
     } catch (error) {
       console.error(error);
     }
